@@ -1,0 +1,61 @@
+select id_wykladowcy
+from wykladowcy
+where stopien_tytul='doktor'
+intersect 
+select id_wykladowcy
+from wyklady
+
+
+select count(id_wykladu) as ZLiteraM
+from wyklady
+where CHARINDEX('m',nazwa_wykladu) > 0
+
+
+
+select id_studenta as student_wykladowca, nr_grupy as grupa_katedra
+from studenci
+where nr_grupy like 'DMIe%'
+union
+select id_wykladowcy, katedra
+from wykladowcy
+order by  grupa_katedra asc
+
+
+select count(id_wykladowcy) as Liczba_wykladowcow
+from wykladowcy
+
+
+select  id_studenta
+from studenci_wyklady
+where id_wykladu=11
+intersect
+select  id_studenta
+from studenci_wyklady
+where id_wykladu=4
+
+
+select id_studenta, id_wykladu
+from studenci_wyklady
+except 
+select id_studenta, id_wykladu
+from oceny_studentow
+order by id_wykladu
+
+
+
+select nazwisko, imie, data_urodzenia 
+from studenci
+where datepart(month,data_urodzenia)=2
+
+
+select sum(liczba_godzin) as liczba_godzin
+from wyklady 
+
+
+
+
+
+select distinct id_studenta 
+from oceny_studentow
+where data_egzaminu between '20170301' and'20170331'
+order by id_studenta descs
