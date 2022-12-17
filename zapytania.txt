@@ -1,0 +1,31 @@
+select distinct  nazwisko, imie, s.id_studenta, data_egzaminu
+from studenci s inner join oceny_studentow o 
+on s.id_studenta=o.id_studenta
+order by data_egzaminu
+
+
+select id_pracownika, nazwisko, imie 
+from pracownicy p inner join wykladowcy w 
+on p.id_pracownika=w.id_wykladowcy left join
+wyklady wy on w.id_wykladowcy=wy.id_wykladowcy 
+where id_wykladu is null
+
+select id_pracownika id_wykladowcy, nazwisko
+from pracownicy 
+where id_pracownika in
+(select id_wykladowcy
+from wykladowcy
+where id_wykladowcy not in
+(select id_wykladowcy
+from wyklady))
+
+select nazwisko, imie, katedra
+from pracownicy p left join wykladowcy w
+on p.id_pracownika=w.id_wykladowcy
+
+
+select sum(liczba_godzin*stawka)
+from wykladowcy wy inner join  wyklady w
+on wy.id_wykladowcy=w.id_wykladowcy inner join 
+stopnie_tytuly st 
+on wy.stopien_tytul=st.stopien_tytul
