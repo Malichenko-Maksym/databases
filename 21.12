@@ -1,0 +1,28 @@
+select nazwisko, imie, AVG(ocena) średnia
+from studenci s inner join oceny_studentow o on s.id_studenta=o.id_studenta
+group by nazwisko, imie, s.id_studenta
+having nazwisko='nowakowski'
+order by nazwisko desc, imie desc
+
+select nazwisko, imie, AVG(ocena) średnia
+from pracownicy p inner join wyklady w on p.id_pracownika=w.id_wykladowcy
+left join oceny_studentow o on w.id_wykladu=o.id_wykladu
+group by nazwisko, imie, id_pracownika
+order by średnia desc
+
+select s.id_studenta, nazwisko, imie, COUNT(id_wykladu) liczba_wykladów
+from studenci s left join studenci_wyklady sw on s.id_studenta=sw.id_studenta
+group by s.id_studenta, nazwisko, imie
+having COUNT(id_wykladu) = 1
+order by s.id_studenta
+
+select id_pracownika, nazwisko, imie, sum(liczba_godzin*stawka)
+from pracownicy p inner join wyklady w on p.id_pracownika=w.id_wykladowcy  
+inner join wykladowcy wy on w.id_wykladowcy=wy.id_wykladowcy
+inner join stopnie_tytuly s on wy.stopien_tytul=s.stopien_tytul
+group by id_pracownika, nazwisko, imie
+
+
+select katedra,stopien_tytul, COUNT(*)
+from wykladowcy w inner join wyklady wy on w.id_wykladowcy=wy.id_wykladowcy
+group by rollup(katedra,stopien_tytul)
